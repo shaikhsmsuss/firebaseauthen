@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
-var firebase = require('firebase');
-
+var firebase = require('firebase'); {
+    {
+        /* go to the firebase app and create the new project there you will find all the 
+    information  to create this config variable   */
+    }
+}
 
 var config = {
-    apiKey: "AIzaSyDpqBgzTXeHORq1eAa0ICf2RHoVFL6W158",
-    authDomain: "uservey-26abb.firebaseapp.com",
-    databaseURL: "https://uservey-26abb.firebaseio.com",
-    projectId: "uservey-26abb",
-    storageBucket: "uservey-26abb.appspot.com",
-    messagingSenderId: "707863534463"
+    apiKey: "apikey",
+    authDomain: "domain name",
+    databaseURL: "database url",
+    projectId: "project id",
+    storageBucket: "storagebucket",
+    messagingSenderId: "messaging id"
 };
 firebase.initializeApp(config);
 
 
 class Authen extends Component {
 
-    login(event){
+    login(event) {
         const email = this.refs.email.value;
         const password = this.refs.password.value;
         console.log(email, password);
@@ -34,11 +38,11 @@ class Authen extends Component {
         promise.catch(e => {
             var err = e.message;
             console.log(err);
-            this.setState({err: err});
+            this.setState({ err: err });
         });
     }
 
-    signup(){
+    signup() {
         const email = this.refs.email.value;
         const password = this.refs.password.value;
         console.log(email, password);
@@ -49,22 +53,22 @@ class Authen extends Component {
 
         promise
             .then(user => {
-                var err = "Welcome "+ user.email;
-                firebase.database().ref('users/'+user.uid).set({
+                var err = "Welcome " + user.email;
+                firebase.database().ref('users/' + user.uid).set({
                     email: user.email
                 });
                 console.log(user);
-                this.setState({err: err});
+                this.setState({ err: err });
             });
         promise
             .catch(e => {
                 var err = e.message;
                 console.log(err);
-                this.setState(({err: err}));
+                this.setState(({ err: err }));
             });
     }
 
-    logout(){
+    logout() {
         firebase.auth().signOut();
         var lout = document.getElementById('logout');
 
@@ -72,16 +76,16 @@ class Authen extends Component {
         lout.classList.add('hide');
     }
 
-    google(){
+    google() {
         console.log("I am in google method");
 
         var provider = new firebase.auth.GoogleAuthProvider();
         var promise = firebase.auth().signInWithPopup(provider);
 
-        promise.then( result => {
+        promise.then(result => {
             var user = result.user;
             console.log(result);
-            firebase.database().ref('users/'+user.uid).set({
+            firebase.database().ref('users/' + user.uid).set({
                 email: user.email,
                 name: user.displayName
             });
@@ -94,7 +98,7 @@ class Authen extends Component {
 
     }
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -107,17 +111,31 @@ class Authen extends Component {
         this.google = this.google.bind(this);
     }
 
-    render(){
-        return(
-            <div>
-                <input id="email" ref="email" type="email" placeholder="Enter your email" /><br />
-                <input id="pass" ref="password" type="password" placeholder="Enter your password" /><br />
-                <p>{this.state.err}</p>
-                <button onClick={this.login}>Log In</button>
-                <button onClick={this.signup}>Sign Up</button>
-                <button onClick={this.logout} id="logout" className="hide">Log out</button><br />
-                <button onClick={this.google} id="google" className="google">Sign In with Google</button>
-            </div>
+    render() {
+        return ( <
+            div >
+            <
+            input id = "email"
+            ref = "email"
+            type = "email"
+            placeholder = "Enter your email" / > < br / >
+            <
+            input id = "pass"
+            ref = "password"
+            type = "password"
+            placeholder = "Enter your password" / > < br / >
+            <
+            p > { this.state.err } < /p> <
+            button onClick = { this.login } > Log In < /button> <
+            button onClick = { this.signup } > Sign Up < /button> <
+            button onClick = { this.logout }
+            id = "logout"
+            className = "hide" > Log out < /button><br / >
+            <
+            button onClick = { this.google }
+            id = "google"
+            className = "google" > Sign In with Google < /button> < /
+            div >
         );
     }
 }
